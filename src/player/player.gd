@@ -9,6 +9,8 @@ const FLAP_FORCE = 22
 var y_motion: float = 0
 var on_ground: bool = true
 
+var can_die: bool = true
+
 
 func _ready() -> void:
 	Global.player_x = position.x
@@ -41,7 +43,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_Player_area_entered(area: Area2D) -> void:
-	if area.is_in_group("Obstacle"):
+	if area.is_in_group("Obstacle") and can_die:
 		Global.current_speed = 0
 		queue_free()
 
