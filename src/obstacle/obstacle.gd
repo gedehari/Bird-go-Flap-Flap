@@ -5,7 +5,8 @@ var is_passed: bool = false
 
 
 func _ready() -> void:
-	pass
+	if Global.main:
+		connect("passed", Global.main, "_on_obstacle_passed")
 
 
 func _process(delta: float) -> void:
