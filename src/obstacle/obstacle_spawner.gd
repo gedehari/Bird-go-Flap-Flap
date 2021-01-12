@@ -7,7 +7,7 @@ var min_y: int = 500
 var max_y: int = 980
 
 var obstacle = preload("res://src/obstacle/obstacle_bottom.tscn")
-var obstacle_scirpt = preload("res://src/obstacle/obstacle.gd")
+var obstacle_script = preload("res://src/obstacle/obstacle.gd")
 var obstacle_tp: Node2D = Node2D.new()
 var spawn_timer: Timer = Timer.new()
 
@@ -30,10 +30,6 @@ func _ready() -> void:
 	obstacle_tp.add_child(top)
 	top.position.y = -obstacle_opening_distance
 	top.scale.y = -1
-	
-	start_spawning()
-	
-	print(720 - obstacle_width)
 
 
 func _process(delta: float) -> void:
@@ -47,7 +43,7 @@ func spawn() -> void:
 		rng_pos.randomize()
 	
 	last_spawned = obstacle_tp.duplicate()
-	last_spawned.set_script(obstacle_scirpt)
+	last_spawned.set_script(obstacle_script)
 	last_spawned.x_kill = -obstacle_width + 10
 	add_child(last_spawned)
 	last_spawned.position.x = 720 + obstacle_width
@@ -58,6 +54,6 @@ func start_spawning() -> void:
 	is_active = true
 	spawn_timer.connect("timeout", self, "spawn")
 	spawn_timer.one_shot = true
-	spawn_timer.wait_time = 1.5
+	spawn_timer.wait_time = 1.25
 	add_child(spawn_timer)
 	spawn_timer.start()
