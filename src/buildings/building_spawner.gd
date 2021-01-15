@@ -3,6 +3,9 @@ extends Node2D
 var x_kill: int = -300
 var modifier: float = 0.25
 
+export var distance_min: int = 125
+export var distance_max: int = 350
+
 var buildings: Array = [
 	preload("res://src/buildings/building_1.tscn"),
 	preload("res://src/buildings/building_2.tscn")
@@ -30,7 +33,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if last_spawned:
-		if last_spawned.position.x < 720 - rng_distance.randi_range(100, 350):
+		if last_spawned.position.x < 720 - rng_distance.randi_range(distance_min, distance_max):
 			spawn()
 
 
