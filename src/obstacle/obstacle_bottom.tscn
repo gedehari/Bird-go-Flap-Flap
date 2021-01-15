@@ -6,10 +6,10 @@
 "Obstacle",
 ]]
 
+[node name="Shape" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 0, 3, 175, 2, 174, 85, 145, 87, 167, 1139, 17, 1137, 36, 88, -2, 87 )
+
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -85, -81 )
 texture = ExtResource( 1 )
 centered = false
-
-[node name="Shape" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 0, 3, 175, 2, 174, 85, 145, 87, 167, 1139, 17, 1137, 36, 88, -2, 87 )
