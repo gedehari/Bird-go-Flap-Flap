@@ -138,8 +138,8 @@ func _on_player_dead() -> void:
 	else:
 		color = Color.black
 		color_fg = Color.white
-	score_text.modulate.a = 0
 	score_text.modulate = color_fg
+	score_text.modulate.a = 0
 	
 	$UI/DeathFlash.show()
 	$Tween3.interpolate_property(Global, "current_speed", Global.current_speed, 0, 0.75)
