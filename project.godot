@@ -22,6 +22,10 @@ _global_script_class_icons={
 
 config/name="Bird go Flap Flap!"
 run/main_scene="res://src/main.tscn"
+boot_splash/image="res://res/textures/empty.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/bg_color=Color( 1, 1, 1, 1 )
 config/icon="res://icon_432.png"
 
 [autoload]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/obstacle/obstacle_spawner.tscn" type="PackedScene" id=2]
@@ -7,6 +7,12 @@
 [ext_resource path="res://res/fonts/numbers_idk.fnt" type="BitmapFont" id=5]
 [ext_resource path="res://res/textures/light.png" type="Texture" id=6]
 [ext_resource path="res://res/textures/sun.png" type="Texture" id=7]
+[ext_resource path="res://res/textures/title.png" type="Texture" id=8]
+[ext_resource path="res://res/textures/arrowkey_1.png" type="Texture" id=9]
+[ext_resource path="res://res/textures/arrowkey_2.png" type="Texture" id=10]
+[ext_resource path="res://res/textures/touch_2.png" type="Texture" id=11]
+[ext_resource path="res://res/textures/touch_1.png" type="Texture" id=12]
+[ext_resource path="res://res/textures/score.png" type="Texture" id=13]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 light_mode = 1
@@ -20,7 +26,39 @@ colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 [sub_resource type="GradientTexture" id=4]
 gradient = SubResource( 3 )
 
-[sub_resource type="CanvasItemMaterial" id=5]
+[sub_resource type="Animation" id=5]
+resource_name = "arrowhint"
+length = 0.75
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ), ExtResource( 10 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "touchhint"
+length = 0.75
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ), ExtResource( 11 ) ]
+}
 
 [sub_resource type="CanvasItemMaterial" id=6]
 
@@ -76,7 +114,6 @@ texture = ExtResource( 6 )
 visible = false
 texture = ExtResource( 6 )
 texture_scale = 1.08
-shadow_enabled = true
 
 [node name="TodRotRt" type="Node2D" parent="ScreenCenter"]
 position = Vector2( 3.43527, 626.448 )
@@ -94,37 +131,61 @@ update_scale = false
 [node name="BuildingSpawner" parent="ScreenCenter/LightLayer" instance=ExtResource( 4 )]
 position = Vector2( 0, 938 )
 
-[node name="TextureRect4" type="TextureRect" parent="ScreenCenter/LightLayer"]
-visible = false
-material = SubResource( 2 )
-margin_top = 967.0
-margin_right = 188.0
-margin_bottom = 1687.0
-rect_rotation = -89.9999
-texture = SubResource( 4 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="BuildingSpawner2" parent="ScreenCenter/LightLayer" instance=ExtResource( 4 )]
 position = Vector2( 0, 1085 )
 scale = Vector2( 1.75, 1.75 )
 distance_min = 250
 distance_max = 525
 
-[node name="TextureRect3" type="TextureRect" parent="ScreenCenter/LightLayer"]
+[node name="Intro" type="ColorRect" parent="ScreenCenter/LightLayer"]
 visible = false
-material = SubResource( 5 )
-margin_top = 1111.0
-margin_right = 188.0
-margin_bottom = 1831.0
+margin_top = 320.0
+margin_right = 720.0
+margin_bottom = 1280.0
+color = Color( 1, 1, 1, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="ScreenCenter/LightLayer/Intro"]
+modulate = Color( 1, 1, 1, 0.784314 )
+material = SubResource( 2 )
+margin_right = 69.0
+margin_bottom = 720.0
 rect_rotation = -89.9999
 texture = SubResource( 4 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TextureRect4" type="TextureRect" parent="ScreenCenter/LightLayer/Intro"]
+modulate = Color( 1, 1, 1, 0.784314 )
+material = SubResource( 2 )
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 720.0
+margin_top = 7.62939e-06
+margin_right = 789.0
+margin_bottom = 720.0
+rect_rotation = 89.9999
+texture = SubResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Sprite" parent="ScreenCenter/LightLayer/Intro"]
+position = Vector2( 360, 146 )
+texture = ExtResource( 8 )
+
+[node name="Hint" type="Sprite" parent="ScreenCenter/LightLayer/Intro"]
+position = Vector2( 360, 479 )
+texture = ExtResource( 9 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ScreenCenter/LightLayer/Intro/Hint"]
+anims/arrowhint = SubResource( 5 )
+anims/touchhint = SubResource( 8 )
 
 [node name="ObstacleSpawner" parent="ScreenCenter/LightLayer" instance=ExtResource( 2 )]
 material = SubResource( 6 )
@@ -138,7 +199,6 @@ texture_scale = 1.9
 energy = 0.0
 range_layer_min = 1
 range_layer_max = 1
-shadow_enabled = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -146,12 +206,37 @@ __meta__ = {
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="ScreenCenter" type="Control" parent="UI"]
+[node name="GameOverCover" type="ColorRect" parent="UI"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+color = Color( 1, 1, 1, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ScreenCenter" type="Control" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -360.0
+margin_top = -640.0
+margin_right = 360.0
+margin_bottom = 640.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreText" type="Sprite" parent="UI/ScreenCenter"]
+visible = false
+position = Vector2( 360, 581 )
+texture = ExtResource( 13 )
+
+[node name="ScorePos" type="Position2D" parent="UI/ScreenCenter"]
+visible = false
+position = Vector2( 360, 676 )
 
 [node name="CenterContainer" type="CenterContainer" parent="UI/ScreenCenter"]
 anchor_top = 0.5
