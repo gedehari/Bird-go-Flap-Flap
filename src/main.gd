@@ -157,6 +157,8 @@ func _on_player_dead() -> void:
 	$Tween3.interpolate_property(score_label_container, "rect_position:y", score_label_container.rect_position.y, score_pos.position.y, 1, Tween.TRANS_BACK, Tween.EASE_IN_OUT)
 	$Tween3.start()
 	
+	yield(get_tree().create_timer(1), "timeout")
+	
 	can_retry = true
 
 

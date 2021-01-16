@@ -3,7 +3,7 @@ signal dead
 
 const GRAVITY = 75
 const MOTION_LIMIT = 50
-const GROUND_Y = 1280
+const GROUND_Y = 1125
 
 const FLAP_FORCE = 22
 

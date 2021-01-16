@@ -10,11 +10,17 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node2D",
+"class": "MoveLoop",
+"language": "GDScript",
+"path": "res://src/move_loop/move_loop.gd"
+}, {
+"base": "Node2D",
 "class": "MoveScroll",
 "language": "GDScript",
 "path": "res://src/move_scroll/move_scroll.gd"
 } ]
 _global_script_class_icons={
+"MoveLoop": "",
 "MoveScroll": ""
 }
 

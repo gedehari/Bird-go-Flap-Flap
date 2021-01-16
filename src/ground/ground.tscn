@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://res/textures/ground.png" type="Texture" id=1]
+[ext_resource path="res://src/move_loop/move_loop.gd" type="Script" id=2]
+
+[node name="Ground" type="Node2D"]
+script = ExtResource( 2 )
+x_loop = -720
+
+[node name="g1" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="g2" type="Sprite" parent="."]
+position = Vector2( 720, 0 )
+texture = ExtResource( 1 )
+centered = false
