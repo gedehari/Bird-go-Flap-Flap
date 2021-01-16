@@ -10,6 +10,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if position.x < Global.player_x and not is_passed:
-		emit_signal("passed")
-		is_passed = true
+	if Global.main: if not Global.main.is_dead:
+		if (position.x + 100) < Global.player_x and not is_passed:
+			emit_signal("passed")
+			is_passed = true

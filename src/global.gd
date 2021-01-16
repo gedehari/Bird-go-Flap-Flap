@@ -7,6 +7,9 @@ var current_speed: int = default_speed
 
 var player_x: int
 
+var last_bg_mod: Color = Color.white
+var last_tod_mod: Color = Color.white
+
 var main: CanvasLayer
 
 
