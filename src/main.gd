@@ -26,11 +26,14 @@ var moon_tex: StreamTexture = preload("res://res/textures/moon.png")
 
 
 func _ready() -> void:
+	AudioServer.set_bus_effect_enabled(1, 0, false)
+	
+	$AmbientSounds/Night.volume_db = -50
+	
 	_on_resize()
+	get_tree().connect("screen_resized", self, "_on_resize")
 	
 	Global.main = self
-	
-	get_tree().connect("screen_resized", self, "_on_resize")
 	
 	if not Global.first_game:
 		score_label.show()
@@ -91,6 +94,12 @@ func time_of_day(to: bool) -> void:
 		$Tween.start()
 		yield($Tween, "tween_all_completed")
 		
+		$AmbientSounds/Tween.interpolate_property($AmbientSounds/Day, "volume_db", -15, -50, 2, Tween.TRANS_EXPO, Tween.EASE_IN)
+		$AmbientSounds/Tween.interpolate_property($AmbientSounds/Night, "volume_db", -50, -15, 2, Tween.TRANS_EXPO, Tween.EASE_OUT)
+		$AmbientSounds/Tween.start()
+		
+		AudioServer.set_bus_effect_enabled(1, 0, true)
+		
 		tod_sunmoon.texture = moon_tex
 		tod_playerlight.show()
 		tod_sunlight.hide()
@@ -107,6 +116,12 @@ func time_of_day(to: bool) -> void:
 		$Tween.interpolate_property($ScreenCenter/TodRotRt, "rotation_degrees", 0, -55, 2, Tween.TRANS_BACK, Tween.EASE_IN)
 		$Tween.start()
 		yield($Tween, "tween_all_completed")
+		
+		$AmbientSounds/Tween.interpolate_property($AmbientSounds/Day, "volume_db", -50, -15, 2, Tween.TRANS_EXPO, Tween.EASE_OUT)
+		$AmbientSounds/Tween.interpolate_property($AmbientSounds/Night, "volume_db", -15, -50, 2, Tween.TRANS_EXPO, Tween.EASE_IN)
+		$AmbientSounds/Tween.start()
+		
+		AudioServer.set_bus_effect_enabled(1, 0, false)
 		
 		tod_sunmoon.texture = sun_tex
 		tod_playerlight.hide()
@@ -125,6 +140,11 @@ func _on_obstacle_passed() -> void:
 		time_of_day(day_or_night)
 	
 	score_label.text = str(score)
+	
+	$Tween3.interpolate_property(score_label_container, "rect_position:y", score_label_container.rect_position.y - 25, score_label_container.rect_position.y, 0.4, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	$Tween3.start()
+	
+	$ScoreSound.play()
 
 
 func _on_player_dead() -> void:
@@ -148,6 +168,8 @@ func _on_player_dead() -> void:
 	
 	yield(get_tree().create_timer(0.75), "timeout")
 	
+	call("_play_swoosh")
+	
 	$UI/DeathFlash.hide()
 	
 	gameover_cover.show()
@@ -160,6 +182,11 @@ func _on_player_dead() -> void:
 	yield(get_tree().create_timer(1), "timeout")
 	
 	can_retry = true
+
+
+func _play_swoosh() -> void:
+	yield(get_tree().create_timer(0.3), "timeout")
+	$SwooshSound.play()
 
 
 func _on_resize() -> void:

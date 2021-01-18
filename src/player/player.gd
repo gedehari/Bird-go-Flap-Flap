@@ -19,7 +19,7 @@ var is_dead: bool = false
 func _ready() -> void:
 	if not Global.first_game:
 		can_move = true
-		flap()
+		flap(true)
 	
 	Global.player_x = position.x
 
@@ -51,11 +51,11 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if not is_dead:
 		if Input.is_action_just_pressed("flap"):
-			flap()
+			flap(true)
 		
 		if event is InputEventScreenTouch:
 			if event.pressed:
-				flap()
+				flap(true)
 
 
 func _on_Player_area_entered(area: Area2D) -> void:
@@ -65,13 +65,18 @@ func _on_Player_area_entered(area: Area2D) -> void:
 
 func die() -> void:
 	is_dead = true
-	flap()
+	flap(false)
 	
 	if Global.main:
 		connect("dead", Global.main, "_on_player_dead")
 		emit_signal("dead")
 
 
-func flap() -> void:
+func flap(play: bool) -> void:
 	if not can_move: can_move = true
 	y_motion = -FLAP_FORCE
+	
+	if play: $FlapSound.play()
+	else:
+		$HitSound.play()
+		$DieSound.play()
